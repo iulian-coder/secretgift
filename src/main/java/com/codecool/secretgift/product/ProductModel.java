@@ -26,5 +26,9 @@ public class ProductModel {
     @NotNull
     private double price;
 
+    @NotNull
+    private String description;
+
+    @NotNull
     private String urlPicture;
 }
