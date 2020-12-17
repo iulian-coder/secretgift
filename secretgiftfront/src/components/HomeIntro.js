@@ -29,6 +29,7 @@ function HomeIntro() {
           <a href="/picker">Click to Enter the shop</a>
         </h2>
       </div>
+    </div>
   );
 }
 

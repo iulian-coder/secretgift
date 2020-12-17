@@ -12,6 +12,7 @@ function Shop() {
   const [productsData, setProductsData] = useState([]);
   const [cart, setCart] = useState([]);
   const [page, setPage] = useState(PAGE_PRODUCTS);
+  const [priceRange, setPriceRange] = useState(50);
 
   useEffect(() => {
     async function fetchData() {
@@ -19,13 +20,15 @@ function Shop() {
         const responseData = await axios.get(
           "http://localhost:8080/api/v1/shop"
         );
-        setProductsData(responseData.data);
+        setProductsData(
+          responseData.data.filter((item) => item.price === priceRange)
+        );
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, []);
+  }, [priceRange]);
 
   useEffect(() => {
     let localCart = localStorage.getItem("cart");
@@ -36,11 +39,7 @@ function Shop() {
   }, []);
 
   const addToCart = (item) => {
-    // let cartCopy = [...cart, { ...item }];
     let cartCopy = [...cart];
-
-    // //assuming we have an ID field in our item
-    // let { ID } = item;
 
     // //look for item in cart array
     let existingItem = cartCopy.find((cartItem) => cartItem.id === item.id);
@@ -65,8 +64,8 @@ function Shop() {
   const removeFromCart = (itemID) => {
     let cartCopy = [...cart];
 
-    // Eroare ciudata la filtru nu merge cu !==
-
+    // Eroare la filtru nu merge cu !==
+    // eslint-disable-next-line
     cartCopy = cartCopy.filter((item) => item.id != itemID);
 
     //update state and local
@@ -79,13 +78,37 @@ function Shop() {
     setPage(nextPage);
   };
 
-  const sumOfQuantity = cart.reduce((a, v) => (a = a + v.quantity), 0);
+  const changePriceRange = (price) => {
+    setPriceRange(price);
+  };
 
+  const sendOrder = () => {
+    let orderDTO = [];
+    for (let index = 0; index < cart.length; index++) {
+      const element = {
+        id: cart[index].id,
+        quantity: cart[index].quantity,
+      };
+      orderDTO.push(element);
+    }
+
+    let response = sendOrderToServer(orderDTO);
+
+    console.log(response);
+    //update state and local
+    setCart([]);
+    let cartCopy = [];
+    let cartString = JSON.stringify(cartCopy);
+    localStorage.setItem("cart", cartString);
+  };
+
+  const sumOfQuantity = cart.reduce((a, v) => (a = a + v.quantity), 0);
 
   return (
     <>
       <NavbarShop
         itemsInCart={sumOfQuantity}
+        changePriceRange={changePriceRange}
         navigateTo={() => navigateTo(PAGE_CART)}
       />
       <div className="container-fluid mt-2 mb-5">
@@ -111,7 +134,11 @@ function Shop() {
                 )}
                 {page === PAGE_CART && (
                   <>
-                    <ViewCart items={cart} removeFromCart={removeFromCart} />
+                    <ViewCart
+                      items={cart}
+                      removeFromCart={removeFromCart}
+                      sendOrder={sendOrder}
+                    />
                   </>
                 )}
               </div>
@@ -124,3 +151,14 @@ function Shop() {
 }
 
 export default Shop;
+async function sendOrderToServer(dataOrder) {
+  try {
+    const result = await axios.post(
+      "http://localhost:8080/api/v1/shop",
+      dataOrder
+    );
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

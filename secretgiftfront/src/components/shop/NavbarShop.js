@@ -3,7 +3,7 @@ import "./style/Shop.css";
 
 const PAGE_CART = "viewCart";
 
-function NavbarTop({ itemsInCart, navigateTo }) {
+function NavbarTop({ itemsInCart, navigateTo, changePriceRange }) {
   return (
     <div className="container-fluid px-0">
       <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed">
@@ -23,6 +23,7 @@ function NavbarTop({ itemsInCart, navigateTo }) {
                 role="tab"
                 aria-controls="home"
                 aria-selected="true"
+                onClick={() => changePriceRange(50.0)}
               >
                 50 RON
               </a>{" "}
@@ -37,6 +38,7 @@ function NavbarTop({ itemsInCart, navigateTo }) {
                 role="tab"
                 aria-controls="profile"
                 aria-selected="false"
+                onClick={() => changePriceRange(150.0)}
               >
                 150 RON
               </a>{" "}
@@ -51,6 +53,7 @@ function NavbarTop({ itemsInCart, navigateTo }) {
                 role="tab"
                 aria-controls="contact"
                 aria-selected="false"
+                onClick={() => changePriceRange(200.0)}
               >
                 200 RON
               </a>{" "}

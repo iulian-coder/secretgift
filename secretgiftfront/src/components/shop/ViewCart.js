@@ -1,6 +1,6 @@
 import React from "react";
 
-function ViewCart({ items, removeFromCart }) {
+function ViewCart({ items, removeFromCart, sendOrder }) {
   function sumOfTotal() {
     let arr = [0];
     for (let index = 0; index < items.length; index++) {
@@ -69,9 +69,13 @@ function ViewCart({ items, removeFromCart }) {
       </div>
       <div className="row mt-4 d-flex align-items-center">
         <div className="col-sm-6 order-md-2 text-right">
-          <a href="/shop" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">
+          <button
+            onClick={() => sendOrder()}
+            className="btn btn-primary mb-4 btn-lg pl-5 pr-5"
+          >
+            {" "}
             Checkout
-          </a>
+          </button>
         </div>
         <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
           <a href="/shop">{"<--"} Continue Shopping</a>
