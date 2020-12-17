@@ -1,6 +1,7 @@
 import "./App.css";
 import HomeIntro from "./components/HomeIntro";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import PersonPicker from "./components/PersonPicker";
 import Shop from "./components/shop/Shop";
 
 function App() {
@@ -11,6 +12,8 @@ function App() {
           <Route exact path="/shop">
             <Shop />
           </Route>
+          <Route path="/picker"><PersonPicker/></Route>
+
           <Route path="/">
             <HomeIntro />
           </Route>
