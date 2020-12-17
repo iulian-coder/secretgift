@@ -22,8 +22,5 @@ public class ProductController {
         return productService.findAllProducts();
     }
 
-    @PostMapping
-    public void receiveOrder(@RequestBody List<ProductDTOOrder> productDTOOrderList){
-        System.out.println(productDTOOrderList);
-    }
+
 }

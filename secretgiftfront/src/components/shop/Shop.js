@@ -83,23 +83,26 @@ function Shop() {
   };
 
   const sendOrder = () => {
+    // customerEmail -> To do request form
     let orderDTO = [];
     for (let index = 0; index < cart.length; index++) {
       const element = {
-        id: cart[index].id,
+        productId: cart[index].id,
         quantity: cart[index].quantity,
+        customerEmail: "customeremail@yahoo.com",
       };
       orderDTO.push(element);
     }
 
-    let response = sendOrderToServer(orderDTO);
-
-    console.log(response);
-    //update state and local
-    setCart([]);
-    let cartCopy = [];
-    let cartString = JSON.stringify(cartCopy);
-    localStorage.setItem("cart", cartString);
+    sendOrderToServer(orderDTO).then(function name(params) {
+      alert("Your order reference \n" + params);
+      //update state and local
+      setCart([]);
+      let cartCopy = [];
+      let cartString = JSON.stringify(cartCopy);
+      localStorage.setItem("cart", cartString);
+      window.location.replace("/shop");
+    });
   };
 
   const sumOfQuantity = cart.reduce((a, v) => (a = a + v.quantity), 0);
@@ -154,7 +157,7 @@ export default Shop;
 async function sendOrderToServer(dataOrder) {
   try {
     const result = await axios.post(
-      "http://localhost:8080/api/v1/shop",
+      "http://localhost:8080/api/v1/order",
       dataOrder
     );
     return result.data;
