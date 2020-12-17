@@ -19,8 +19,19 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ProductModel productModel1 = new ProductModel(1,"Camasa",45.50,
-                "https://via.placeholder.com/550x750");
+        ProductModel productModel1 = new ProductModel(1,
+                "Canapea",
+                50.00,
+               "Some quick example text to build on the card title and make up the bulk of the card's content.",
+                "https://i.imgur.com/SOMPPzU.jpg");
+        ProductModel productModel2 = new ProductModel(
+                2,
+                "Birou cu scaun",
+                50.00,
+                "Some quick example text to build on the card title and make up the bulk of the card's content.",
+                "https://i.imgur.com/eu74Mje.jpg"
+        );
         productRepository.save(productModel1);
+        productRepository.save(productModel2);
     }
 }

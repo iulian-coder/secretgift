@@ -1,5 +1,4 @@
 import React from "react";
-import "./HomeIntro.css";
 
 function HomeIntro() {
   return (
@@ -30,7 +29,6 @@ function HomeIntro() {
           <a href="/picker">Click to Enter the shop</a>
         </h2>
       </div>
-    </div>
   );
 }
 
