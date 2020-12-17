@@ -27,7 +27,7 @@ function HomeIntro() {
       <div className="message">
         <h1>Santa Secret Gift Shop</h1>
         <h2 className="message2">
-          <a href="/shop">Click to Enter the shop</a>
+          <a href="/picker">Click to Enter the shop</a>
         </h2>
       </div>
     </div>
